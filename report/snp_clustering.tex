@@ -1,0 +1,104 @@
+\documentclass[letterpaper]{article}
+\usepackage{tocloft}
+\usepackage{blindtext}
+\usepackage{titlesec}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{graphics}
+\usepackage{caption}
+\usepackage[normalem]{ulem}
+\usepackage{enumitem}
+\usepackage{natbib}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\hypersetup{
+        colorlinks = true,
+        linkcolor = blue,
+        filecolor = magenta,            
+        urlcolor = cyan,
+        pdftitle={Overleaf Example},
+        pdfpagemode=FullScreen,
+}
+
+\title{Comparison of Lightweight Clustering Methods on SNP Data for Population Structure Exploration}
+\author{Isaac Thomas}
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+\setcounter{section}{-1}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{subparagraph}{5}{\parindent}%
+        {3.25ex \@plus1ex \@minus .2ex}%
+        {0.75ex plus 0.1ex}% space after heading
+        {\normalfont\normalsize\bfseries}}
+\makeatother
+
+\makeatletter
+
+\newcommand{\dateformatter}[2]{%
+    \textbf{#1} -- \textit{#2}%
+}
+
+\newcommand{\dateevent}[2]{%
+    \addcontentsline{dates}{section}{#1 -- #2}%
+    \dateformatter{#1}{#2}%
+}
+
+\newcommand{\listofdates}{%
+    \begingroup
+    \renewcommand{\contentsname}{List of Dates}
+    \let\old@starttoc\@starttoc
+    \def\@starttoc##1{%
+        \old@starttoc{dates}%
+    }
+    \tableofcontents%
+    \endgroup
+}
+
+\makeatother
+
+%\AddToHook{cmd/section/before}{\clearpage}
+\sectionfont{\fontsize{12}{15}\selectfont}
+\subsectionfont{\fontsize{10}{15}\selectfont}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\DeclareSymbolFont{matha}{OML}{txmi}{m}{it}% txfonts
+\DeclareMathSymbol{\varv}{\mathord}{matha}{118}
+\newcommand{\Setup}{\code{Setup}}
+\newcommand{\Prove}{\code{Prove}}
+\newcommand{\Verify}{\code{Verify}}
+\newcommand{\Sim}{\code{Sim}}
+\setlistdepth{100}
+\newenvironment{myenum}%
+{\pointedenum\begin{enumerate}}%
+{\end{enumerate}}
+\begin{document}
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+\subsection{Motivation}
+\noindent Single Nucleotide Polymorphisms (SNPs) have had massive intergenerational effects on human phenotypes. Such impact renders SNP data useful in describing phenotypes to an extent that allows informative clustering. As biologically/probabilistically informed methods for this task are more expensive and require more detailed data or heavy computation, we ask a crucial question: what is the simplest clustering method that one can "get away" with while informatively clustering SNP data with the goal of capturing population demographics? This paper explores answers to this inquiry in the context of two well-known methods: $K$-means clustering and Ward's method for agglomerative and divisive hierarchical clustering. We compare these two methods' abilities to cluster SNP data from the 1000 Genomes dataset and determine how much insight they can "get away" with providing without significant biological or probabilistic information/assumptions.
+\subsection{Overview}
+Section $\ref{sec:methods}$ covers the details of the 1000 Genomes dataset used, the preprocessing methods used, and the model training. We explore the structure of the 1000 Genomes dataset, and we go over methods used to filter out the SNPs that would be most useful for clustering tasks. Section $\ref{sec:discussion}$ compares the abilities of these models to each other and against more biologically or probabilistically informed methods. We compare training procedures, training time, and hyperparameter tuning needs of these two methods. Section $\ref{sec:discussion}$ compares the insights extracted by each model's clustering of the SNP data and discusses promising directions for future research in this area. We determine which method was more informative and discuss the performance-insight tradeoff relevant to both. We also discuss future research for lightweight methods that can informatively cluster SNP data.
+\section{Methods}\label{sec:methods}
+\subsection{Data \& Preprocessing}\label{subsec:data}
+\subsubsection{Dataset}
+\subsubsection{Preprocessing}
+\subsection{Models}
+\subsubsection{$K$-Means Clustering}
+\subsubsection{Hierarchical Clustering (Ward's Method)}
+\section{Discussion}\label{sec:discussion}
+\subsection{Model Comparison}\label{subsec:comparison}
+\subsection{Promising Directions for Future Research}\label{subsec:future}
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
