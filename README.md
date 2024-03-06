@@ -1,4 +1,4 @@
-# Effects of Observation Dependence on Eye Color Prediction Accuracy (Logistic Regression vs. Hierarchical Bayesian Inference)
+# Comparison of Lightweight Methods for Clustering on SNP Data ($k$-means vs. hierarchical)
 
 ## Overview
 
@@ -19,9 +19,18 @@ The model analysis that follows is compact enough to be included in `notebooks/m
 
 The script `scripts/pipe.sh` runs the entire pipeline:
 * PCA with `plink`
-* notebook execution
+* clustering and visualization
 * notebook export to markdown
 
-you can specify two optional parameters, $p$ (number of principal components) and $k$ (maximum number of clusters to test during hyperparameter tuning).
+you can specify two optional parameters, $p$ (number of principal components) and $k$ (maximum number of clusters to test during hyperparameter tuning):
 
-This analysis uses `plink`, `numpy`, `pandas`, and `scikit-learn`. The pipe script will create an environment containing these dependencies and run the analysis within. 
+`bash scripts/pipe.sh -p <num_principal_components> -k <max_number_of_clusters>`
+
+This analysis depends on:
+* `plink` for PCA and SNP variance weighting
+* `numpy` and `pandas` for data manipulation 
+* `scikit-learn` for clustering
+* `matplotlib` for plotting 
+* `papermill` and `nbconvert` for notebook execution/export
+
+The pipe script will create an environment containing these dependencies and run the analysis within. 
