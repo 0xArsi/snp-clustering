@@ -82,6 +82,14 @@
 \begin{document}
 \maketitle
 
+\section{TODO}
+\begin{itemize}
+    \item download plink (right version) and get it to run $\checkmark$
+    \item download pruned vcf data for chromosomes $\checkmark$
+    \item count minor alleles for each SNP for each individual
+    \item filter out SNPs that are important somehow
+    \item get data into table format (rows are individuals, cols are SNP allele counts)
+\end{itemize}
 \section{Introduction}\label{sec:intro}
 \subsection{Motivation}
 \noindent Single Nucleotide Polymorphisms (SNPs) have had massive intergenerational effects on human phenotypes. Such impact renders SNP data useful in describing phenotypes to an extent that allows informative clustering. As biologically/probabilistically informed methods for this task are more expensive and require more detailed data or heavy computation, we ask a crucial question: what is the simplest clustering method that one can "get away" with while informatively clustering SNP data with the goal of capturing population demographics? This paper explores answers to this inquiry in the context of two well-known methods: $K$-means clustering and Ward's method for agglomerative and divisive hierarchical clustering. We compare these two methods' abilities to cluster SNP data from the 1000 Genomes dataset and determine how much insight they can "get away" with providing without significant biological or probabilistic information/assumptions.
