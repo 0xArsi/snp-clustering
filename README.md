@@ -55,4 +55,5 @@ will create a `conda` environment and activate it for the duration of the analys
 
 ## Remaining Tasks
 * Compare with hierarchical clustering
+* Explore variance weights of SNPs from PCA output
 * Add details about downloading 1000 Genomes dataset to readme

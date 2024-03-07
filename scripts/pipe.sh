@@ -70,7 +70,7 @@ echo "filtering out SNPs with MAF less than ${MAF}"
 echo "writing plink intermediate data to ${tmp_dir}"
 
 
-# to avoid curse of dimensionality, get top 3 principal components with plink
+# to avoid curse of dimensionality, get top principal components with plink
 echo "getting top PCAs for clustering..."
 plink --vcf $VCF --maf $MAF --make-bed --allow-no-sex --pca var-wts $COMPONENTS --out ${tmp_dir}/${PCA_OUT}
 echo "done"
