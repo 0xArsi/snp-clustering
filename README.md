@@ -24,6 +24,8 @@ The repository is structured as follows:
 
 We strongly recommend that you run this analysis in a Linux environment. Command line tools like `realpath` or `readlink` are used to avoid relative pathing in the pipeline; these utilities may not be available in compatible versions or at all on other systems.
 
+It is first recommended to run `bash scripts/clean.sh` for sanity.
+
 The script `scripts/pipe.sh` runs the entire pipeline:
 * PCA with `plink`
 * clustering, hyperparameter tuning and visualization
@@ -53,4 +55,4 @@ will create a `conda` environment and activate it for the duration of the analys
 
 ## Remaining Tasks
 * Compare with hierarchical clustering
-* Improve readme
+* Add details about downloading 1000 Genomes dataset to readme
