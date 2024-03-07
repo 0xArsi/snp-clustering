@@ -84,11 +84,33 @@
 
 \section{TODO}
 \begin{itemize}
-    \item download plink (right version) and get it to run $\checkmark$
-    \item download pruned vcf data for chromosomes $\checkmark$
-    \item count minor alleles for each SNP for each individual
-    \item filter out SNPs that are important somehow
-    \item get data into table format (rows are individuals, cols are SNP allele counts)
+    \item download \code{plink} (right version) and get it to run $\checkmark$
+    \item download pruned vcf data for chromosome 19 $\checkmark$
+    \item get PCA results $\checkmark$
+        \begin{itemize}
+            \item map each row of PCA data to its population code and subpopulation code $\checkmark$
+        \end{itemize}
+    \item build and run $k$-means
+    \begin{itemize}
+        \item plot silhouette score vs $k$i $\checkmark$
+        \item plot the optimal clustering
+        \item label/color points by their population/subpopulation
+        \item compute silhouette score of optimal clustering
+        \item compute optimal number of clusters for agglomerative clustering
+        \item plot silhouette score vs $k$ for agglomerative clustering
+        \item plot optimal clustering
+        \item label/color points by their population/subpopulation
+        \item plot dendrogram
+    \end{itemize}
+    \item build and run hierarchical clustering
+    \begin{itemize}
+        \item compute optimal number of clusters for agglomerative clustering
+        \item plot silhouette score vs $k$ for agglomerative clustering
+        \item plot optimal clustering
+        \item label/color points by their population/subpopulation
+        \item plot dendrogram
+    \end{itemize}
+
 \end{itemize}
 \section{Introduction}\label{sec:intro}
 \subsection{Motivation}
