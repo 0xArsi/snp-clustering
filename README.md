@@ -11,7 +11,7 @@ This project investigates the performance of traditional $k$-means clustering an
 ## Repository Contents
 
 The repository is structured as follows:
-* `data` - contains data for PCA
+* `data` - contains data for PCA. To save time, we only include SNP data from chromosome 19.
 * `notebooks` - contains the notebook used for clustering
 * `out` - contains analysis output report
 * `plink` - contains the `plink` binary
@@ -21,6 +21,8 @@ The repository is structured as follows:
 
 
 ## Usage
+
+We strongly recommend that you run this analysis in a Linux environment. Command line tools like `realpath` or `readlink` are used to avoid relative pathing in the pipeline; these utilities may not be available in compatible versions or at all on other systems.
 
 The script `scripts/pipe.sh` runs the entire pipeline:
 * PCA with `plink`
@@ -50,4 +52,5 @@ This analysis depends on:
 will create a `conda` environment and activate it for the duration of the analysis.
 
 ## Remaining Tasks
-* Comparison with hierarchical clustering
+* Compare with hierarchical clustering
+* Improve readme
