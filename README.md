@@ -53,6 +53,10 @@ This analysis depends on:
 
 will create a `conda` environment and activate it for the duration of the analysis.
 
+## Current Results
+
+We have performed $k$-means clustering on the SNP data to determine how well it could capture population and subpopulation level structures. As one might imagine, we came to the seemingly reasonable conclusion that $k$-means can adequately capture the population substructure (silhouette score of $\sim 0.73$ with an optimal 6 clusters), while tuning to cluster at the subpopulation level yields poor precision (silhouette score of $\sim 0.26$ with an "optimal" 20 clusters). In this case, there are likely many mislabellings between subpopulations belonging to the same population. In the near future, we will compare this method's performance against that of hierarchical clustering at both resolutions.
+
 ## Remaining Tasks
 * Compare with hierarchical clustering
 * Explore variance weights of SNPs from PCA output
