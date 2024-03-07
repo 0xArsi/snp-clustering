@@ -45,6 +45,9 @@ if [ "$create_env" == "yes" ]; then
     eval "$(conda shell.bash hook)"
     conda activate ${repo_dir}/snp-clustering-env
     echo "done"
+else
+    eval "$(conda shell.bash hook)"
+    conda activate snp-clustering-env
 fi
 
 alias plink="${repo_dir}/plink/plink"
@@ -69,15 +72,17 @@ echo "writing plink intermediate data to ${tmp_dir}"
 
 # to avoid curse of dimensionality, get top 3 principal components with plink
 echo "getting top PCAs for clustering..."
-plink --vcf $VCF_TEST --maf $MAF --make-bed --allow-no-sex --pca var-wts $COMPONENTS --out ${tmp_dir}/${PCA_OUT}
+plink --vcf $VCF --maf $MAF --make-bed --allow-no-sex --pca var-wts $COMPONENTS --out ${tmp_dir}/${PCA_OUT}
 echo "done"
 
 #execute notebook
 echo "executing cluster analysis..."
-papermill ${notebook_dir}/snp_clustering.ipynb ${out_dir}/snp_clustering_report.ipynb -p DATA_PATH ${tmp_dir}/${PCA_OUT}.eigenvec -p K_HIGH 12
+papermill ${notebook_dir}/snp_clustering.ipynb ${out_dir}/snp_clustering_report.ipynb --cwd ${repo_dir}/notebooks -p DATA_PATH ${tmp_dir}/${PCA_OUT}.eigenvec -p K_HIGH 12
 echo "done"
 
 #convert to markdown
 echo "exporting executed notebook to markdown..."
 jupyter nbconvert --to markdown ${out_dir}/snp_clustering_report.ipynb --output-dir ${out_dir}
 echo "whole analysis done"
+
+conda deactivate
