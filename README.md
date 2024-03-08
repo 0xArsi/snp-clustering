@@ -53,11 +53,20 @@ This analysis depends on:
 
 will create a `conda` environment and activate it for the duration of the analysis.
 
+## Downloading 1000 Genomes Dataset
+
+If you would like to try this analysis on SNPs from other chromosomes, you can do the following:
+```
+cd data
+mkdir -p thousand_genomes_data
+#download the entire data folder
+wget -r -np -m --no-check-certificate -P $(pwd)/thousand_genomes_data ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_gen
+omes_project/release/20181203_biallelic_SNV/
+```
+you will then need to LD-prune the data (we are already using pruned data) and move all of the resulting files back into the `data` directory. This is a time-consuming process and is out of the scope of this analysis, but you can refer [here](https://www.cog-genomics.org/plink/1.9/ld) to do so with `plink`.
+
 ## Current Results
 
-We have performed $k$-means clustering on the SNP data to determine how well it could capture population and subpopulation level structures. As one might imagine, we came to the seemingly reasonable conclusion that $k$-means can adequately capture the population substructure (silhouette score of $\sim 0.73$ with an optimal 6 clusters), while tuning to cluster at the subpopulation level yields poor precision (silhouette score of $\sim 0.26$ with an "optimal" 20 clusters). In this case, there are likely many mislabellings between subpopulations belonging to the same population. In the near future, we will compare this method's performance against that of hierarchical clustering at both resolutions.
+We have performed $k$-means clustering on the SNP data to determine how well it could capture population and subpopulation level structures. As one might imagine, we came to the seemingly reasonable conclusion that $k$-means can adequately capture the population substructure (silhouette score of $\sim 0.73$ with an optimal 6 clusters), while tuning to cluster at the subpopulation level yields poor precision (silhouette score of $\sim 0.26$ with an "optimal" 20 clusters). In this case, there are likely many mislabellings between subpopulations belonging to the same population.
 
-## Remaining Tasks
-* Compare with hierarchical clustering
-* Explore variance weights of SNPs from PCA output
-* Add details about downloading 1000 Genomes dataset to readme
+Surprisingly though, hierarchical clustering does worse. Using three kinds of linkages (Ward, Average, Single) resulted in silhouette scores of $< 0.2$ and an incorrect number of optimal clusters (8 instead of 6) for populations. The subpopulation structure was barely discernible based on the optimal clusters the algorithm merged the data up to. Inspecting the details of these linkage functions renders this result not as surprising, though. At each iteration of agglomerative clustering, the two clusters with the lowest pairwise "distance" get merged together. Ward's method interprets this distance via the intra-cluster variance increase due to the merging of the clusters, but it ignores inter-cluster distance. This does not lend well to clustering subpopulations which may have low inter-cluster distances. Average linkage considers both intra-cluster and inter-cluster distance, but the inter-cluster distance of subpopulations in a given population may be too small to be useful compared to the inter-cluster distance between the populations themselves. Single linkage considers the minimum distance between one point in one cluster and a point in the other; this could yield irregularly shaped or otherwise nonsensically merged clusters since the distribution of pairwise point distances is ignored.
