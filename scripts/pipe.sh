@@ -77,7 +77,7 @@ echo "done"
 
 #execute notebook
 echo "executing cluster analysis..."
-papermill ${notebook_dir}/snp_clustering.ipynb ${out_dir}/snp_clustering_report.ipynb --cwd ${repo_dir}/notebooks -p DATA_PATH ${tmp_dir}/${PCA_OUT}.eigenvec -p K_HIGH 12
+papermill ${notebook_dir}/snp_clustering.ipynb ${out_dir}/snp_clustering_report.ipynb --cwd ${repo_dir}/notebooks -p DATA_PATH ${tmp_dir}/${PCA_OUT}.eigenvec -p K_HIGH ${K_HIGH}
 echo "done"
 
 #convert to markdown
