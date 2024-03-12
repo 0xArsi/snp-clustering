@@ -34,7 +34,10 @@ The script `scripts/pipe.sh` runs the entire pipeline:
 you can specify multiple optional parameters:
  * `-p <num_principal_components>` 
  * `-k <max_num_clusters>`
+ * `-c <clustering_iterations>`
  * `-m <min_minor_allele_frequency>`
+ * `-s <random_seed>`
+ * `-v yes` (explained below)
 
 `bash scripts/pipe.sh -p <num_principal_components> -k <max_number_of_clusters> -m <minor_allele_frequency> [-v yes]`
 
@@ -67,6 +70,15 @@ you will then need to LD-prune the data (we are already using pruned data) and m
 
 ## Current Results
 
-We have performed $k$-means clustering on the SNP data to determine how well it could capture population and subpopulation level structures. As one might imagine, we came to the seemingly reasonable conclusion that $k$-means can adequately capture the population substructure (silhouette score of $\sim 0.73$ with an optimal 6 clusters), while tuning to cluster at the subpopulation level yields poor precision (silhouette score of $\sim 0.26$ with an "optimal" 20 clusters). In this case, there are likely many mislabellings between subpopulations belonging to the same population.
+We have performed $k$-means clustering on the SNP data to determine how well it could capture population and subpopulation level structures. It came close to capturing the true population structure (silhouette score of $\sim 0.73$ with an optimal 5 clusters), while tuning to cluster at the subpopulation level yields poor precision (silhouette score of $\sim 0.26$ with an "optimal" 20 clusters). In this case, there are likely many mislabellings between subpopulations belonging to the same population.
 
-Surprisingly though, hierarchical clustering does worse. Using three kinds of linkages (Ward, Average, Single) resulted in silhouette scores of $< 0.2$ and an incorrect number of optimal clusters (8 instead of 6) for populations. The subpopulation structure was barely discernible based on the optimal clusters the algorithm merged the data up to. Inspecting the details of these linkage functions renders this result not as surprising, though. At each iteration of agglomerative clustering, the two clusters with the lowest pairwise "distance" get merged together. Ward's method interprets this distance via the intra-cluster variance increase due to the merging of the clusters, but it ignores inter-cluster distance. This does not lend well to clustering subpopulations which may have low inter-cluster distances. Average linkage considers both intra-cluster and inter-cluster distance, but the inter-cluster distance of subpopulations in a given population may be too small to be useful compared to the inter-cluster distance between the populations themselves. Single linkage considers the minimum distance between one point in one cluster and a point in the other; this could yield irregularly shaped or otherwise nonsensically merged clusters since the distribution of pairwise point distances is ignored.
+The best instances of hierarchical clustering (using Ward linkage and average linkage) achieved a similar result when tuned by distance threshold instead of desired number of clusters (sil. scores of ~0.75). Both of these methods also did not discern subpopulation structure well. Again, this is likely due to the fact that none of these linkage methods handle cases where subcluster distance distributions are very unimodal (no big difference between intracluster and intercluster distance).
+
+## Limitations and Future Research
+
+This project has the following limitations:
+* data size 
+* use of genetically/biologically uninformed distance functions
+* use of naive hyperparameter tuning methods 
+
+The latter two of these are arguably the most important. Additionally, future work should be done on a way to combine the results of hierarchical clustering at multiple distance thresholds to capture subcluster structure more effectively. One could also explore representing the SNP data into a different, potentially non-euclidean space.
