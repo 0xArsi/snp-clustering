@@ -32,6 +32,7 @@ The script `scripts/pipe.sh` runs the entire pipeline:
 * notebook export to markdown
 
 you can specify multiple optional parameters:
+ * `-f <input_VCF_file_basename_with_file_extension>` (assumes VCF file is in `data` directory already) 
  * `-p <num_principal_components>` 
  * `-k <max_number_clusters>`
  * `-c <clustering_iterations>`
@@ -39,7 +40,11 @@ you can specify multiple optional parameters:
  * `-s <random_seed>`
  * `-v yes` (explained below)
 
-`bash scripts/pipe.sh -p <num_principal_components> -k <max_number_of_clusters> -c <clustering_iterations> -m <minor_allele_frequency> -s <random_seed> [-v yes]`
+`bash scripts/pipe.sh -f <input_VCF_file_basename> -p <num_principal_components> -k <max_number_of_clusters> -c <clustering_iterations> -m <minor_allele_frequency> -s <random_seed> [-v yes]`
+
+For example:
+
+`bash scripts/pipe.sh -f <chr19_snp_data.vcf.gz> -p 4 -k 14 -c 1000 -m 0.05 -s 343764 -v yes`
 
 ## Dependencies
 
@@ -54,9 +59,9 @@ This analysis depends on:
 
 `bash scripts/pipe.sh -p 4 -k 12 -m 0.05 -v yes`
 
-will create a `conda` environment and activate it for the duration of the analysis.
+will create a `conda` environment and activate it for the duration of the analysis. If you plan to run this analysis multiple times, it would be a good idea to specify `-v yes` on the first occasion, then activate the environment created in the project directory and omit the `-v` option for future runs.
 
-## Downloading 1000 Genomes Dataset
+## Using Other Data from 1000 Genomes Dataset
 
 If you would like to try this analysis on SNPs from other chromosomes, you can do the following:
 ```
@@ -66,7 +71,7 @@ mkdir -p thousand_genomes_data
 wget -r -np -m --no-check-certificate -P $(pwd)/thousand_genomes_data ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_gen
 omes_project/release/20181203_biallelic_SNV/
 ```
-you will then need to LD-prune the data (we are already using pruned data) and move all of the resulting files back into the `data` directory. This is a time-consuming process and is out of the scope of this analysis, but you can refer [here](https://www.cog-genomics.org/plink/1.9/ld) to do so with `plink`.
+you will then need to LD-prune the data (we are already using pruned data) and move all of the resulting files back into the `data` directory. This is a time-consuming process and is out of the scope of this analysis, but you can refer [here](https://www.cog-genomics.org/plink/1.9/ld) to do so with `plink`. If you have multiple pruned VCF files, you must combine them with `cat` or a similar utility, then move the result to `data`.
 
 ## Results
 

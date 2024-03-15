@@ -2,14 +2,18 @@
 shopt -s expand_aliases
 
 #default settings
+VCF_BASENAME=1000G_chr19_pruned.vcf.gz
 RAND_SEED=256
 COMPONENTS=3
 K_HIGH=11
 CLUSTERING_ITERS=500
 MAF=0.05
 create_env=false
-while getopts ":p:k:c:m:s:v:" opt; do
+while getopts ":f:p:k:c:m:s:v:" opt; do
     case ${opt} in
+        f )
+            VCF_BASENAME=$OPTARG
+            ;;
         p )
             COMPONENTS=$OPTARG
             ;;
@@ -39,7 +43,7 @@ while getopts ":p:k:c:m:s:v:" opt; do
     esac
 done
 
-repo_dir=$(realpath .)
+repo_dir=$(readlink -f .)
 dir_name=$(basename $repo_dir)
 #if user is in scripts dir
 if [ "$dir_name" == "scripts" ]; then
@@ -47,6 +51,29 @@ if [ "$dir_name" == "scripts" ]; then
     cd ..
     repo_dir=$(realpath .)
 fi
+
+
+alias plink="${repo_dir}/plink/plink"
+
+data_dir=${repo_dir}/data
+notebook_dir=${repo_dir}/notebooks
+tmp_dir=${repo_dir}/tmp
+out_dir=${repo_dir}/out
+
+mkdir -p $tmp_dir $out_dir
+
+VCF=${data_dir}/${VCF_BASENAME}
+if [ ! -f $VCF ]; then
+    echo "cannot find your input VCF file ${VCF_BASENAME} in data directory. aborting"
+    exit 1
+fi
+
+echo "using SNP data from ${VCF}"
+echo "using ${COMPONENTS} principal components"
+echo "using at most ${K_HIGH} clusters"
+echo "filtering out SNPs with MAF less than ${MAF}"
+echo "using random seed of $RAND_SEED"
+echo "writing plink intermediate data to ${tmp_dir}"
 
 if [ "$create_env" == "yes" ]; then
     echo "creating analysis environment..."
@@ -59,25 +86,8 @@ else
     conda activate snp-clustering-env
 fi
 
-alias plink="${repo_dir}/plink/plink"
-
-data_dir=${repo_dir}/data
-notebook_dir=${repo_dir}/notebooks
-tmp_dir=${repo_dir}/tmp
-out_dir=${repo_dir}/out
-
-mkdir -p $tmp_dir $out_dir
-
-VCF=${data_dir}/1000G_chr19_pruned.vcf.gz
-VCF_TEST=${data_dir}/ps3_gwas.vcf.gz
+#VCF_TEST=${data_dir}/ps3_gwas.vcf.gz
 PCA_OUT=clustering_pca
-
-echo "using ${COMPONENTS} principal components"
-echo "using at most ${K_HIGH} clusters"
-echo "filtering out SNPs with MAF less than ${MAF}"
-echo "using random seed of $RAND_SEED"
-echo "writing plink intermediate data to ${tmp_dir}"
-
 
 # to avoid curse of dimensionality, get top principal components with plink
 echo "getting top PCAs for clustering..."
