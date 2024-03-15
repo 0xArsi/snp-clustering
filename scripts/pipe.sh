@@ -8,7 +8,7 @@ K_HIGH=11
 CLUSTERING_ITERS=500
 MAF=0.05
 create_env=false
-while getopts ":p:k:m:v:" opt; do
+while getopts ":p:k:c:m:s:v:" opt; do
     case ${opt} in
         p )
             COMPONENTS=$OPTARG
