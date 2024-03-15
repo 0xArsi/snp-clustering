@@ -75,7 +75,7 @@ you will then need to LD-prune the data (we are already using pruned data) and m
 
 ## Results
 
-We performed $k$-means clustering on the SNP data to determine how well it could capture population and subpopulation level structures. It came close to capturing the true population structure (silhouette score of $\sim 0.75$ with an optimal 5 clusters), while tuning to cluster at the subpopulation level yields poor precision (silhouette score of $\sim 0.34$ with an "optimal" 20 clusters). In this case, there are likely many mislabellings between subpopulations belonging to the same population.
+We performed $k$-means clustering on the SNP data to determine how well it could capture population and subpopulation level structures. It came close to capturing the true population structure (silhouette score of $\sim 0.75$ with an optimal 5 clusters), while tuning to cluster at the subpopulation level yields poor precision (silhouette score of $\sim 0.26$ with an "optimal" 20 clusters). In this case, there are likely many mislabellings between subpopulations belonging to the same population.
 
 The best instances of hierarchical clustering (using Ward linkage and average linkage) achieved a similar result when tuned by distance threshold instead of desired number of clusters (sil. scores of ~0.75, optimal $k$ was also 5). Both of these methods also did not discern subpopulation structure well. 
 
