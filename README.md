@@ -33,13 +33,13 @@ The script `scripts/pipe.sh` runs the entire pipeline:
 
 you can specify multiple optional parameters:
  * `-p <num_principal_components>` 
- * `-k <max_num_clusters>`
+ * `-k <max_number_clusters>`
  * `-c <clustering_iterations>`
- * `-m <min_minor_allele_frequency>`
+ * `-m <minor_allele_frequency>`
  * `-s <random_seed>`
  * `-v yes` (explained below)
 
-`bash scripts/pipe.sh -p <num_principal_components> -k <max_number_of_clusters> -m <minor_allele_frequency> [-v yes]`
+`bash scripts/pipe.sh -p <num_principal_components> -k <max_number_of_clusters> -c <clustering_iterations> -m <minor_allele_frequency> -s <random_seed> [-v yes]`
 
 ## Dependencies
 
@@ -74,7 +74,7 @@ We performed $k$-means clustering on the SNP data to determine how well it could
 
 The best instances of hierarchical clustering (using Ward linkage and average linkage) achieved a similar result when tuned by distance threshold instead of desired number of clusters (sil. scores of ~0.75, optimal $k$ was also 5). Both of these methods also did not discern subpopulation structure well. 
 
-As visualized in the analysis, the common shortcomings of these methods is likely explained by the unimodal distribution of pairwise distances <u>within</u> populations (no big difference between subpopulation-level intracluster and intercluster distance).
+As visualized in the analysis, the common shortcoming of these methods is likely explained by the unimodal distribution of pairwise distances <u>within</u> populations (no big difference between subpopulation-level intracluster and intercluster distance).
 
 ## Limitations and Future Research
 
