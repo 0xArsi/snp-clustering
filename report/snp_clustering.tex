@@ -31,7 +31,6 @@
 \author{Isaac Thomas}
 \setcounter{tocdepth}{5}
 \setcounter{secnumdepth}{5}
-\setcounter{section}{-1}
 
 \newcommand{\code}[1]{\texttt{#1}}
 
@@ -121,7 +120,7 @@
 \subsection{Motivation}
 \noindent Single Nucleotide Polymorphisms (SNPs) have had massive intergenerational effects on human phenotypes. Such impact renders SNP data useful in describing phenotypes to an extent that allows informative clustering. As biologically/probabilistically informed methods for this task can be more space/computation intensive, we attempt to determine the simplest clustering method that can informatively cluster SNP data with the goal of capturing population demographics. Using the 1000 genomes dataset, we compare $k$-means and hierarchical clustering regarding how much structure they can discern without substantial biological or probabilistic information/assumptions. We also highlight limitations of this work and avenues for future research.
 
-\section{Materials \& Methods (\href {https://github.com/0xArsi/snp-clustering.git}{Available Here})}\label{sec:methods}
+\section{Materials, Methods, and \href {https://github.com/0xArsi/snp-clustering.git}{Code Availability}}\label{sec:methods}
 \subsection{Data \& Preprocessing}\label{subsec:data}
 We used the 1000 Genomes Dataset \cite{1000genomes}, which consists of SNPs from thousands of individuals categorized by population. To save time, we used only SNPs from chromosome 19. We used data that was already LD-pruned to eliminate SNPs strongly correlated for reasons unrelated to population traits. We then performed principal component analysis with \code{plink},  keeping 4 principal components. Given our SNP data matrix $X$, PCA computes the singular value decomposition $X = \textbf{U} \boldmath{\Sigma} \textbf{V}^\top $, where the rows of the lower-dimensional $\textbf{U}$ are the transformed data in the basis determined by the columns of $\textbf{V}^\top$. The columns of $\textbf{V}^\top$ contain the contribution of each SNP to the data.
 \subsection{Clustering Methods Used}
